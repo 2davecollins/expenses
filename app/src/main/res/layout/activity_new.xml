@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+                android:id="@+id/etNewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_gravity="center"
+                android:hint="@string/new_title" />
+        <EditText
+                android:id="@+id/etNewWhen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="DD/MM/YY"
+                android:focusable="false"/>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+                android:id="@+id/etNewNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_gravity="center"
+                android:hint="@string/new_note" />
+
+        <EditText
+                android:id="@+id/etNewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_gravity="center"
+                android:hint="@string/new_price"
+                android:inputType="numberDecimal"/>
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <Button
+                android:id="@+id/bAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/save" />
+
+        <Button
+                android:id="@+id/btnSnap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/camera" />
+
+    </LinearLayout>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"/>
+
+    <TextureView
+            android:id="@+id/texture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+</LinearLayout>

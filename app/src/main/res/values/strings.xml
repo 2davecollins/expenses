@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Expenses</string>
+    <string name="save">Save</string>
+    <string name="saved">Item Saved</string>
+    <string name="not_saved">Couldn\'t Save</string>
+    <string name="no_note">No item</string>
+    <string name="note">Update Item</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="updated">Item Updated</string>
+    <string name="new_title">Add Shop</string>
+    <string name="new_note">Add Item</string>
+    <string name="new_price">Add Price</string>
+    <string name="camera">Snap</string>
+    <string name="title">hi dave</string>
+    <string name="action_settings">Menu</string>
+</resources>

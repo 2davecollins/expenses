@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class Expense(
 
     @PrimaryKey
-    @ColumnInfo(name = "id") val id: Int,
+    @ColumnInfo(name = "id") val id: String,
 
     @ColumnInfo(name = "shop") val shop: String?,
 

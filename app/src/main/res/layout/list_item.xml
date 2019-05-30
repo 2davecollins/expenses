@@ -21,7 +21,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
             <TextView
-                    android:id="@+id/txvWhen"
+                    android:id="@+id/txvDateIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Date"
@@ -36,7 +36,7 @@
                     android:layout_margin="5dp"
                     android:orientation="horizontal">
                 <TextView
-                        android:id="@+id/txvTitle"
+                        android:id="@+id/txvLoc"
                         style="@style/expense_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -46,20 +46,20 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 <TextView
-                        android:id="@+id/txvNote"
+                        android:id="@+id/txvDesc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="7dp"
-                        android:text="Item"
+                        android:text="Description"
                         android:textColor="#616161"
                         android:textSize="18sp"
                         android:textStyle="bold" />
                 <TextView
-                        android:id="@+id/txvPrice"
+                        android:id="@+id/txvTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="7dp"
-                        android:text="Price"
+                        android:text="Total"
                         android:textColor="#616161"
                         android:textSize="18sp"
                         android:textStyle="bold" />

@@ -3,36 +3,57 @@ package com.davec.expenses.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.davec.expenses.R
+import com.davec.expenses.room.AppDatabase
 import com.davec.expenses.room.Expense
 import com.davec.expenses.room.ExpenseListAdapter
 import com.davec.expenses.room.ExpenseViewModel
-
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+
+    private  val REQUEST_CODE = 200
+    private var mExpenseViewModel: ExpenseViewModel?=null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = ExpenseListAdapter(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+       val db = Room.databaseBuilder(
+           getApplicationContext(),
+           AppDatabase::class.java,"expense-database"
+       )
+
+
+
+
+        val recyclerView=findViewById<RecyclerView>(R.id.recyclerview)
+        val adapter=ExpenseListAdapter(this)
+        recyclerView.adapter=adapter
+        recyclerView.layoutManager=LinearLayoutManager(this)
+
+        mExpenseViewModel = ViewModelProviders.of(this).get(ExpenseViewModel::class.java)
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Create new Expense", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-            startActivity(Intent(this@MainActivity, NewActivity::class.java))
+
+            val i=Intent(this@MainActivity, NewActivity::class.java)
+            startActivityForResult(i, REQUEST_CODE)
         }
     }
 
@@ -55,11 +76,26 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
 
-        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+        Log.d("replyIntent", requestCode.toString()+": "+resultCode+"Activity RESULT  "+Activity.RESULT_OK)
+
+        if ( resultCode == Activity.RESULT_OK) {
+
+
             intentData?.let { data ->
-                val expense = Expense(data.getStringExtra(NewActivity.EXTRA_REPLY))
-                ExpenseViewModel.insert(expense)
+
+                val loc = data.getStringExtra("loc")
+                val desc = data.getStringExtra("desc")
+                val total = data.getStringExtra("total")
+                //val date_in = data.getStringExtra(("data_in"))
+                val date_in = "12-12-2010"
+
+                val expense = Expense(0,loc,0,desc,total.toDouble(),date_in,false)
+                Log.d("Expense ",loc+" : "+desc+" : "+total+" : "+date_in)
+
+                mExpenseViewModel?.insert(expense)
+               // ExpenseViewModel.insert(expense)
             }
+
         } else {
             Toast.makeText(
                 applicationContext,

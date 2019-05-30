@@ -1,6 +1,7 @@
 package com.davec.expenses.room
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -29,7 +30,7 @@ abstract class AppDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "Expense_database"
+                    "expense_database"
                 ).build()
                 INSTANCE = instance
                 return instance
@@ -57,10 +58,11 @@ abstract class AppDatabase: RoomDatabase() {
         suspend fun populateDatabase(expenseDao: ExpenseDao) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
-            expenseDao.deleteAll()
+            //expenseDao.deleteAll()
 
-            var expense = Expense(1,"Dunnes",1,"food",10.00,12345678)
-            expenseDao.insert(expense)
+            //var expense = Expense(0,"Dunnes",1,"food",10.00,"30-06-2019",false)
+            //expenseDao.insertExpense(expense)
+            Log.d("test","Testing")
 
 
         }
@@ -68,4 +70,6 @@ abstract class AppDatabase: RoomDatabase() {
 
     }
 
+
 }
+

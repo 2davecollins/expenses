@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.davec.expenses.R
-import kotlinx.android.synthetic.main.list_item.view.*
 
 class ExpenseListAdapter internal constructor(
     context: Context
@@ -18,12 +17,12 @@ class ExpenseListAdapter internal constructor(
     private var expenses = emptyList<Expense>() // Cached copy of words
 
     inner class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleItemView : TextView = itemView.findViewById(R.id.txvTitle)
-        val noteItemView : TextView = itemView.findViewById(R.id.txvNote)
-        val priceItemView : TextView = itemView.findViewById(R.id.txvPrice)
-        val dateItem :TextView = itemView.findViewById(R.id.txvWhen)
-       // val imgDelete :ImageView = itemView.findViewById(R.id.ivRowDelete)
-       // val imgEdit : ImageView = itemView.findViewById(R.id.ivRowEdit)
+        val locItemView : TextView = itemView.findViewById(R.id.txvLoc)
+        val descItemView : TextView = itemView.findViewById(R.id.txvDesc)
+        val totalItemView : TextView = itemView.findViewById(R.id.txvTotal)
+        val dateinItemView :TextView = itemView.findViewById(R.id.txvDateIn)
+        val imgDelete :ImageView = itemView.findViewById(R.id.ivRowDelete)
+        val imgEdit : ImageView= itemView.findViewById(R.id.ivRowEdit)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpenseViewHolder {
@@ -33,10 +32,10 @@ class ExpenseListAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int) {
         val current = expenses[position]
-        holder.titleItemView.text = current.shop
-        holder.noteItemView.text = current.description
-        holder.dateItem.text = current.date.toString()
-        holder.priceItemView.text = current.price.toString()
+        holder.locItemView.text = current.loc
+        holder.descItemView.text = current.desc
+        holder.dateinItemView.text = current.date_in
+        holder.totalItemView.text = current.total.toString()
 
     }
 

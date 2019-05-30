@@ -3,21 +3,29 @@ package com.davec.expenses.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "user_expense")
 data class Expense(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int,
+    //@ColumnInfo(name = "id") val id: String = UUID.randomUUID().toString(),
 
-    @ColumnInfo(name = "shop") val shop: String?,
+    @NotNull
+    @ColumnInfo(name = "loc") val loc: String?,
 
     @ColumnInfo(name = "qty") val qty:Int?,
 
-    @ColumnInfo(name = "description") val description: String?,
+    @NotNull
+    @ColumnInfo(name = "desc") val desc: String?,
 
-    @ColumnInfo(name = "price") val price: Double?,
+    @NotNull
+    @ColumnInfo(name = "total") val total: Double?,
 
-    @ColumnInfo(name ="date") val date: Long?
+    @NotNull
+    @ColumnInfo(name ="date_in") val date_in: String?,
+
+    @ColumnInfo(name = "uploaded") val uploaded : Boolean = false
 
 )

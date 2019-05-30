@@ -9,14 +9,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <EditText
-                android:id="@+id/etNewTitle"
+                android:id="@+id/etNewLoc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:layout_gravity="center"
                 android:hint="@string/new_title" />
         <EditText
-                android:id="@+id/etNewWhen"
+                android:id="@+id/etNewDateIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <EditText
-                android:id="@+id/etNewNote"
+                android:id="@+id/etNewDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -36,7 +36,7 @@
                 android:hint="@string/new_note" />
 
         <EditText
-                android:id="@+id/etNewPrice"
+                android:id="@+id/etNewTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"

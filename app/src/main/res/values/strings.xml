@@ -14,4 +14,5 @@
     <string name="camera">Snap</string>
     <string name="title">hi dave</string>
     <string name="action_settings">Menu</string>
+    <string name="empty_not_saved">Empty Not Saved</string>
 </resources>

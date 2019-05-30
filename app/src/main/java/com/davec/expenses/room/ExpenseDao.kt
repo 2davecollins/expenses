@@ -6,8 +6,9 @@ import androidx.room.*
 
 @Dao
 interface ExpenseDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(expense: Expense)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExpense(expense: Expense)
 
     @Query("SELECT * FROM user_expense")
     fun getAllExpenses(): LiveData<List<Expense>>
@@ -19,10 +20,9 @@ interface ExpenseDao {
     suspend fun updateExpense(expense: Expense)
 
     @Delete
-    suspend fun deleteExpense(expense: Expense): Int
+    suspend fun deleteExpense(expense: Expense)
 
     @Query("DELETE FROM user_expense")
     suspend fun deleteAll()
-
 
 }

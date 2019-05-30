@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             var data = db?.expenseDao()!!.getAllExpenses()
 
             Log.d("Daaaaaaaaaaaaa",data.toString())
-            
+
 
 
         }

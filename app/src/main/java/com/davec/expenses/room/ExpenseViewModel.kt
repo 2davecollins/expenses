@@ -18,11 +18,11 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         allExpenses = repository.allExpenses
     }
 
-    suspend fun insert(expense: Expense) = viewModelScope.launch(Dispatchers.IO) {
+    fun insert(expense: Expense) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(expense)
     }
 
-    suspend fun delete(expense:Expense) = viewModelScope.launch(Dispatchers.IO){
+    fun delete(expense:Expense) = viewModelScope.launch(Dispatchers.IO){
         repository.delete(expense)
     }
 

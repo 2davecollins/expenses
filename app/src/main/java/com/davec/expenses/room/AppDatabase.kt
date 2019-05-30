@@ -1,6 +1,7 @@
 package com.davec.expenses.room
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -61,6 +62,7 @@ abstract class AppDatabase: RoomDatabase() {
 
             //var expense = Expense(0,"Dunnes",1,"food",10.00,"30-06-2019",false)
             //expenseDao.insertExpense(expense)
+            Log.d("test","Testing")
 
 
         }

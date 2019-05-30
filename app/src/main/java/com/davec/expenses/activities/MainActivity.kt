@@ -19,8 +19,6 @@ import com.davec.expenses.room.ExpenseListAdapter
 import com.davec.expenses.room.ExpenseViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,24 +26,20 @@ class MainActivity : AppCompatActivity() {
     private  val REQUEST_CODE = 200
     private var mExpenseViewModel: ExpenseViewModel?=null
 
-    private var db: AppDatabase?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-       db = Room.databaseBuilder(applicationContext,AppDatabase::class.java,"expense_database").build()
-
-        GlobalScope.launch {
-            db?.expenseDao()!!.insertExpense(Expense(0,"a",1,"b",100.00,"28-05-2019",false))
-            var data = db?.expenseDao()!!.getAllExpenses()
-
-            Log.d("Daaaaaaaaaaaaa",data.toString())
+       val db = Room.databaseBuilder(
+           getApplicationContext(),
+           AppDatabase::class.java,"expense-database"
+       )
 
 
 
-        }
 
         val recyclerView=findViewById<RecyclerView>(R.id.recyclerview)
         val adapter=ExpenseListAdapter(this)

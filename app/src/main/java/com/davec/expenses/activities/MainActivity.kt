@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,37 +24,32 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
 
-    private  val REQUEST_CODE = 200
-    private var mExpenseViewModel: ExpenseViewModel?=null
-
-
+    private  val newActivityRequestCode = 1
+    private lateinit var mExpenseViewModel: ExpenseViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-       val db = Room.databaseBuilder(
-           getApplicationContext(),
-           AppDatabase::class.java,"expense-database"
-       )
-
-
-
-
         val recyclerView=findViewById<RecyclerView>(R.id.recyclerview)
         val adapter=ExpenseListAdapter(this)
         recyclerView.adapter=adapter
-        recyclerView.layoutManager=LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         mExpenseViewModel = ViewModelProviders.of(this).get(ExpenseViewModel::class.java)
 
+        mExpenseViewModel.allExpenses.observe(this, Observer {expenses ->
+            expenses?.let{ adapter.setExpenses(it)}
+        })
+
+        
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Create new Expense", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
 
             val i=Intent(this@MainActivity, NewActivity::class.java)
-            startActivityForResult(i, REQUEST_CODE)
+            startActivityForResult(i, newActivityRequestCode)
         }
     }
 
@@ -78,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("replyIntent", requestCode.toString()+": "+resultCode+"Activity RESULT  "+Activity.RESULT_OK)
 
-        if ( resultCode == Activity.RESULT_OK) {
+        if ( requestCode == newActivityRequestCode && resultCode == Activity.RESULT_OK) {
 
 
             intentData?.let { data ->
@@ -86,14 +82,14 @@ class MainActivity : AppCompatActivity() {
                 val loc = data.getStringExtra("loc")
                 val desc = data.getStringExtra("desc")
                 val total = data.getStringExtra("total")
-                //val date_in = data.getStringExtra(("data_in"))
-                val date_in = "12-12-2010"
+                val date_in = data.getStringExtra("date_in")
+                //val date_in = "12-12-2010"
 
                 val expense = Expense(0,loc,0,desc,total.toDouble(),date_in,false)
                 Log.d("Expense ",loc+" : "+desc+" : "+total+" : "+date_in)
 
                 mExpenseViewModel?.insert(expense)
-               // ExpenseViewModel.insert(expense)
+
             }
 
         } else {

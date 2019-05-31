@@ -6,8 +6,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.davec.expenses.R
 import java.util.*
@@ -35,6 +37,7 @@ class NewActivity : AppCompatActivity() {
         newTotalView=findViewById(R.id.etNewTotal)
         newDateinView=findViewById(R.id.etNewDateIn)
 
+
         val calander = Calendar.getInstance()
         val year = calander.get(Calendar.YEAR)
         val month = calander.get(Calendar.MONTH)
@@ -57,7 +60,6 @@ class NewActivity : AppCompatActivity() {
 
 
         val btnAdd=findViewById<Button>(R.id.bAdd)
-
         btnAdd.setOnClickListener {
 
             Log.d("NewActivity", "Btn Add Clicked")

@@ -1,8 +1,6 @@
 package com.davec.expenses.room
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.davec.expenses.R
-import com.davec.expenses.activities.NewActivity
 
 
 class ExpenseListAdapter internal constructor(
@@ -50,10 +47,6 @@ class ExpenseListAdapter internal constructor(
         this.expenses = expenses
         notifyDataSetChanged()
     }
-
-
-
-
 
     override fun getItemCount() = expenses.size
 }

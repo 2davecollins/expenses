@@ -6,10 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.davec.expenses.R
 import java.util.*
@@ -37,6 +35,8 @@ class NewActivity : AppCompatActivity() {
         newTotalView=findViewById(R.id.etNewTotal)
         newDateinView=findViewById(R.id.etNewDateIn)
 
+        setTitle("Add Expense")
+
 
         val calander = Calendar.getInstance()
         val year = calander.get(Calendar.YEAR)
@@ -58,8 +58,15 @@ class NewActivity : AppCompatActivity() {
             datePickerDialog.show()
         }
 
+        val btnSnap = findViewById<Button>(R.id.btnSnap)
 
-        val btnAdd=findViewById<Button>(R.id.bAdd)
+        btnSnap.setOnClickListener {
+            val cameraIntent = Intent(this, CameraActivity::class.java)
+            startActivity(cameraIntent)
+        }
+
+
+        val btnAdd = findViewById<Button>(R.id.bAdd)
         btnAdd.setOnClickListener {
 
             Log.d("NewActivity", "Btn Add Clicked")

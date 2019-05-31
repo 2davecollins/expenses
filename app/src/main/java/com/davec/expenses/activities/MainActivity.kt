@@ -12,9 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.davec.expenses.R
-import com.davec.expenses.room.AppDatabase
 import com.davec.expenses.room.Expense
 import com.davec.expenses.room.ExpenseListAdapter
 import com.davec.expenses.room.ExpenseViewModel
@@ -39,9 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         mExpenseViewModel = ViewModelProviders.of(this).get(ExpenseViewModel::class.java)
 
-        mExpenseViewModel.allExpenses.observe(this, Observer {expenses ->
-            expenses?.let{ adapter.setExpenses(it)}
-        })
+        mExpenseViewModel.allExpenses.observe(
+            this,
+            Observer {expenses ->
+                expenses?.let{ adapter.setExpenses(it)}
+            }
+        )
 
 
         fab.setOnClickListener { view ->

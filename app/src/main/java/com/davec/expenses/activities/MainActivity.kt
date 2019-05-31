@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             expenses?.let{ adapter.setExpenses(it)}
         })
 
-        
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Create new Expense", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()

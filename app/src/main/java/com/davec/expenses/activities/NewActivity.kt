@@ -9,8 +9,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.davec.expenses.Constants
 import com.davec.expenses.R
 import java.util.*
+
 
 class NewActivity : AppCompatActivity() {
 
@@ -19,10 +21,13 @@ class NewActivity : AppCompatActivity() {
     private lateinit var newTotalView: EditText
     private lateinit var newDateinView: EditText
 
-    private val EXTRA_LOC = "loc"
-    private val EXTRA_DESC = "desc"
-    private val EXTRA_TOTAL = "total"
-    private val EXTRA_DATEIN ="date_in"
+
+
+    private var id: Int=0
+
+    companion object{
+        val TAG:String = NewActivity::class.java.simpleName
+    }
 
 
 
@@ -35,7 +40,23 @@ class NewActivity : AppCompatActivity() {
         newTotalView=findViewById(R.id.etNewTotal)
         newDateinView=findViewById(R.id.etNewDateIn)
 
-        setTitle("Add Expense")
+        val intent=intent
+
+        if (intent.hasExtra(Constants.EXTRA_EDIT)) {
+            title="Edit Note"
+            newLocView.setText(intent.getStringExtra(Constants.EXTRA_LOC))
+            newDescView.setText(intent.getStringExtra(Constants.EXTRA_DESC))
+            newTotalView.setText(intent.getStringExtra(Constants.EXTRA_TOTAL))
+            newDateinView.setText(intent.getStringExtra(Constants.EXTRA_DATEIN))
+            id = intent.getIntExtra(Constants.EXTRA_ID,-1)
+            val tot = intent.getStringExtra(Constants.EXTRA_TOTAL)
+
+            Log.d("intent  data","Total "+tot)
+        } else {
+            title="Add Note"
+        }
+
+        setTitle(title)
 
 
         val calander = Calendar.getInstance()
@@ -45,7 +66,7 @@ class NewActivity : AppCompatActivity() {
 
         var dateString = String.format("%02d-%02d-%d",day,month+1,year)
 
-        newDateinView.setText(dateString)
+       // newDateinView.setText(dateString)
 
 
         newDateinView.setOnClickListener {
@@ -83,11 +104,13 @@ class NewActivity : AppCompatActivity() {
                 val desc = newDescView.text.toString()
                 val total = newTotalView.text.toString()
                 val datein = newDateinView.text.toString()
+                var expenseId = id
 
-                replyIntent.putExtra(EXTRA_LOC, loc)
-                replyIntent.putExtra(EXTRA_DESC, desc)
-                replyIntent.putExtra(EXTRA_TOTAL, total)
-                replyIntent.putExtra(EXTRA_DATEIN, datein)
+                replyIntent.putExtra(Constants.EXTRA_ID,expenseId)
+                replyIntent.putExtra(Constants.EXTRA_LOC, loc)
+                replyIntent.putExtra(Constants.EXTRA_DESC, desc)
+                replyIntent.putExtra(Constants.EXTRA_TOTAL, total)
+                replyIntent.putExtra(Constants.EXTRA_DATEIN, datein)
 
                 setResult(Activity.RESULT_OK, replyIntent)
             }
@@ -96,3 +119,4 @@ class NewActivity : AppCompatActivity() {
 
     }
 }
+

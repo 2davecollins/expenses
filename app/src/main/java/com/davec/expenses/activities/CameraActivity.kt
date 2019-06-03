@@ -19,6 +19,10 @@ class CameraActivity : AppCompatActivity(), LifecycleOwner {
     private val REQUEST_CODE_PERMISSIONS=999
     private val REQUIRED_PERMISSIONS=arrayOf(Manifest.permission.CAMERA)
 
+    companion object{
+        val TAG:String = CameraActivity::class.java.simpleName
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)

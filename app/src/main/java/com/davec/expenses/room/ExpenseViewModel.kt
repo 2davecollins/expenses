@@ -1,6 +1,7 @@
 package com.davec.expenses.room
 
 import android.app.Application
+import android.provider.ContactsContract
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         allExpenses = repository.allExpenses
     }
 
+
     fun insert(expense: Expense) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(expense)
     }
@@ -26,6 +28,10 @@ class ExpenseViewModel(application: Application) : AndroidViewModel(application)
         repository.delete(expense)
     }
 
+    fun update(expense: Expense) = viewModelScope.launch(Dispatchers.IO) {
+
+        repository.update(expense)
+    }
 
 
 

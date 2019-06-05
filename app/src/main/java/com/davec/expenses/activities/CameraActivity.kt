@@ -143,9 +143,9 @@ class CameraActivity : AppCompatActivity() , LifecycleOwner{
                         val s = file.absoluteFile.toString()
                         Log.d("CameraXApp", msg)
 
-                        val intent=Intent(this@CameraActivity, TextActivity::class.java)
-                        intent.putExtra("ImageSrc",s)
-                        startActivity(intent)
+//                        val intent=Intent(this@CameraActivity, TextActivity::class.java)
+//                        intent.putExtra("ImageSrc",s)
+//                        startActivity(intent)
                     }
                 })
 

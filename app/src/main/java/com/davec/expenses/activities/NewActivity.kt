@@ -82,7 +82,7 @@ class NewActivity : AppCompatActivity() {
         val btnSnap = findViewById<Button>(R.id.btnSnap)
 
         btnSnap.setOnClickListener {
-            val cameraIntent = Intent(this, CameraActivity::class.java)
+            val cameraIntent = Intent(this, TextActivity::class.java)
             startActivity(cameraIntent)
         }
 

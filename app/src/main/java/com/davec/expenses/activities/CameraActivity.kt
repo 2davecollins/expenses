@@ -1,215 +1,146 @@
 package com.davec.expenses.activities
 
-
 import android.Manifest
+import android.Manifest.permission.CAMERA
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Matrix
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.view.Surface
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.LifecycleOwner
+import com.davec.expenses.Constants
 import com.davec.expenses.R
-import kotlinx.android.synthetic.main.activity_camera.*
+import com.davec.expenses.showToast
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 class CameraActivity : AppCompatActivity(), LifecycleOwner {
 
-    private val REQUEST_CODE_PERMISSIONS=999
-    private val REQUIRED_PERMISSIONS=arrayOf(Manifest.permission.CAMERA)
+    lateinit var imageView: ImageView
+    lateinit var capture_button: Button
+    private var mCurrentPhotoPath: String? = null;
 
-    companion object{
-        val TAG:String = CameraActivity::class.java.simpleName
+
+    companion object {
+        val TAG: String=CameraActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
-
-        if (allPermissionsGranted()) {
-            textureView.post {
-                //startCameraForCapture()
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
-
         setTitle("Camera")
-    }
 
-    private fun startCameraForCapture() {
-        //====================== Image Preview Config code Start==========================
-        // Create configuration object for the viewfinder use case
-//        val previewConfig=PreviewConfig.Builder().apply {
-//            setTargetAspectRatio(Rational(1,1))
-//            setTargetResolution(Size(640,640))
-//        }.build()
+        capture_button = findViewById(R.id.capture_button)
 
-        // Build the viewfinder use case
-        // val preview = Preview(previewConfig)
+        imageView = findViewById(R.id.imageResult)
 
-        // Every time the viewfinder is updated, recompute layout
-//        preview.setOnPreviewOutputUpdateListener {
-//            // To update the SurfaceTexture, we have to remove it and re-add it
-//            val parent = textureView.parent as ViewGroup
-//            parent.removeView(textureView)
-//            parent.addView(textureView,0)
-//            textureView.surfaceTexture=it.surfaceTexture
-//            updateTransform()
-//        }
-        //====================== Image Preview Config code End==========================
+        capture_button.setOnClickListener {
 
+            showToast("snap")
 
-        //====================== Image CAPTURE Config code Start==========================
-//        val imageCaptureConfig=ImageCaptureConfig.Builder().apply {
-//            setTargetAspectRatio(Rational(1,1))
-//            // We don't set a resolution for image capture; instead, we
-//            // select a capture mode which will infer the appropriate
-//            // resolution based on aspect ration and requested mode
-//            setCaptureMode(ImageCapture.CaptureMode.MIN_LATENCY)
-//        }.build()
+            if (checkPersmission()) takePicture() else requestPermission()
 
-        // Build the viewfinder use case
-        //val imageCapture = ImageCapture(imageCaptureConfig)
-
-//        capture_button.setOnClickListener {
-//            val file = File(externalMediaDirs.first(),"${System.currentTimeMillis()}.jpg")
-//            imageCapture.takePicture(file,object :ImageCapture.OnImageSavedListener{
-//                override fun onImageSaved(file: File) {
-//                    val msg = "Photo capture succeeded: ${file.absolutePath}"
-//                    msg.toast()
-//                }
-//
-//                override fun onError(useCaseError: ImageCapture.UseCaseError, message: String, cause: Throwable?) {
-//                    val msg = "Photo capture failed: $message"
-//                    msg.toast()
-//                    cause?.printStackTrace()
-//                }
-//            })
-//        }
-        //====================== Image CAPTURE Config code End==========================
-
-
-        //====================== Image Analysis Config code Start==========================
-
-        // Setup image analysis pipeline that computes average pixel luminance
-//        val analyzerConfig = ImageAnalysisConfig.Builder().apply {
-//            // Use a worker thread for image analysis to prevent glitches
-//            val analyzerThread = HandlerThread("AnalysisThread").apply {
-//                start()
-//            }
-//            setCallbackHandler(Handler(analyzerThread.looper))
-//            setImageReaderMode(ImageAnalysis.ImageReaderMode.ACQUIRE_LATEST_IMAGE)
-//        }.build()
-
-//        val analyzerUseCase = ImageAnalysis(analyzerConfig).apply {
-//            analyzer=LuminosityAnalyzer()
-//        }
-
-        //====================== Image Analysis Config code End==========================
-
-        // Bind use cases to lifecycle
-        // If Android Studio complains about "this" being not a LifecycleOwner
-        // try rebuilding the project or updating the appcompat dependency to
-        // version 1.1.0 or higher.
-
-        //CameraX.bindToLifecycle(this,preview) // For Preview
-
-        //CameraX.bindToLifecycle(this,preview,imageCapture) // For Preview and image Capture
-
-        //CameraX.bindToLifecycle(this,preview,imageCapture,analyzerUseCase)
-        // For Preview, image Capture and analysis use case
-
-    }
-
-    private fun updateTransform() {
-        val matrix=Matrix()
-
-        // Compute the center of the view finder
-        val centerX=textureView.width / 2f
-        val centerY=textureView.height / 2f
-
-        // Correct preview output to account for display rotation
-        val rotationDegree=when (textureView.display.rotation) {
-            Surface.ROTATION_0 -> 0
-            Surface.ROTATION_90 -> 90
-            Surface.ROTATION_180 -> 180
-            Surface.ROTATION_270 -> 270
-            else -> return
         }
-        matrix.postRotate(-rotationDegree.toFloat(), centerX, centerY)
 
-        // Finally, apply transformations to our TextureView
-        textureView.setTransform(matrix)
+
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                textureView.post {
-                    //startCameraForPreview()
-                    // startCameraForCapture()
+    private fun checkPersmission(): Boolean {
+        return (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(READ_EXTERNAL_STORAGE, CAMERA),
+            Constants.PERMISSION_REQUEST_CODE)
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            Constants.PERMISSION_REQUEST_CODE -> {
+
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    &&grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    showToast("Permissionnnnnnnnn")
+                    takePicture()
+
+                } else {
+                    Toast.makeText(this,"Permission Denied",Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                "Permissions not granted by the user.".toast()
-                finish()
+                return
+            }
+
+            else -> {
+
             }
         }
     }
 
-    private fun allPermissionsGranted(): Boolean {
-        for (permission in REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(
-                    this, permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return false
-            }
+    @Throws(IOException::class)
+    private fun createFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            mCurrentPhotoPath = absolutePath
         }
-        return true
     }
 
-    fun String.toast() {
-        Toast.makeText(
-            this@CameraActivity,
-            this,
-            Toast.LENGTH_SHORT
-        ).show()
+    private fun takePicture() {
+
+        val intent: Intent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        val file: File = createFile()
+
+        val uri: Uri =FileProvider.getUriForFile(
+            this,"com.davec.expenses.fileprovider",
+            file
+        )
+
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri)
+        startActivityForResult(intent, Constants.REQUEST_IMAGE_CAPTURE)
     }
 
-//    private class LuminosityAnalyzer:ImageAnalysis.Analyzer{
-//        private var lastAnalyzedTimestamp = 0L
-//        /**
-//         * Helper extension function used to extract a byte array from an
-//         * image plane buffer
-//         */
-//        private fun ByteBuffer.toByteArray():ByteArray{
-//            rewind() //Rewind buffer to zero
-//            val data=ByteArray(remaining())
-//            get(data)  // Copy buffer into byte array
-//            return data // Return byte array
-//        }
-//        override fun analyze(image: ImageProxy, rotationDegrees: Int) {
-//            val currentTimestamp =System.currentTimeMillis()
-//            // Calculate the average luma no more often than every second
-//            if(currentTimestamp-lastAnalyzedTimestamp>=TimeUnit.SECONDS.toMillis(1)){
-//                // Since format in ImageAnalysis is YUV, image.planes[0]
-//                // contains the Y (luminance) plane
-//                val buffer = image.planes[0].buffer
-//                // Extract image data from callback object
-//                val data = buffer.toByteArray()
-//                // Convert the data into an array of pixel values
-//                val pixels = data.map { it.toInt() and 0xFF }
-//                // Compute average luminance for the image
-//                val luma = pixels.average()
-//                // Log the new luma value
-//                Log.d( "CameraX Demo" , "Average luminosity: $luma")
-//                // Update timestamp of last analyzed frame
-//                lastAnalyzedTimestamp = currentTimestamp
-//            }
-//        }
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+
+            //To get the File for further usage
+            val auxFile = File(mCurrentPhotoPath)
+
+            showToast("Pic Taken")
+
+
+            var bitmap : Bitmap=BitmapFactory.decodeFile(mCurrentPhotoPath)
+            imageView.setImageBitmap(bitmap)
+
+        }
+    }
+
+
+
+
+
+
 }

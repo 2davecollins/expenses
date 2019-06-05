@@ -9,4 +9,9 @@ object Constants {
     val EXTRA_ID = "expenseID"
     val EXTRA_EDIT = "edit"
 
+    val REQUEST_IMAGE_CAPTURE = 1
+    val PERMISSION_REQUEST_CODE: Int = 101
+
+
+
 }

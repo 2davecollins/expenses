@@ -16,4 +16,8 @@
     <string name="action_settings">Menu</string>
     <string name="empty_not_saved">Empty Not Saved</string>
     <string name="take_a_picture">Snap</string>
+    <string name="image_label">Image</string>
+    <string name="text_recogition">Text</string>
+    <string name="smart_reply">Smart(coming...)</string>
+
 </resources>

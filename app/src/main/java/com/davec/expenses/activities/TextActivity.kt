@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -22,6 +23,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.davec.expenses.Constants
 import com.davec.expenses.R
 import com.davec.expenses.showToast
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -123,6 +126,8 @@ class TextActivity : AppCompatActivity(), LifecycleOwner {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
         if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
 
             //To get the File for further usage
@@ -136,9 +141,6 @@ class TextActivity : AppCompatActivity(), LifecycleOwner {
 
         }
     }
-
-
-
 
 
 

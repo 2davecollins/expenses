@@ -1,38 +1,34 @@
 package com.davec.expenses.activities
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.davec.expenses.R
-
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Matrix
+import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.os.HandlerThread
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.Rational
 import android.util.Size
 import android.view.Surface
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
-import androidx.lifecycle.LifecycleOwner
-import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
-
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Handler
-import android.os.HandlerThread
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import com.davec.expenses.R
 import kotlinx.android.synthetic.main.activity_camera.*
+import java.io.File
 import java.nio.ByteBuffer
 import java.util.concurrent.TimeUnit
 
 private const val REQUEST_CODE_PERMISSIONS = 10
 
 // This is an array of all the permission specified in the manifest
-private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
 class CameraActivity : AppCompatActivity() , LifecycleOwner{

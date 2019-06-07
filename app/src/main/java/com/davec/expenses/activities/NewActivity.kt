@@ -20,16 +20,11 @@ class NewActivity : AppCompatActivity() {
     private lateinit var newDescView: EditText
     private lateinit var newTotalView: EditText
     private lateinit var newDateinView: EditText
-
-
-
     private var id: Int=0
 
     companion object{
         val TAG:String = NewActivity::class.java.simpleName
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

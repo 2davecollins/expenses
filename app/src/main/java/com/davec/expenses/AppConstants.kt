@@ -11,6 +11,7 @@ object Constants {
 
     val REQUEST_IMAGE_CAPTURE = 1
     val PERMISSION_REQUEST_CODE: Int = 101
+    val PIC_CROP = 2
 
 
 

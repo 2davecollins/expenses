@@ -2,23 +2,18 @@ package com.davec.expenses.activities
 
 import android.app.Activity
 import android.content.Intent
-
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.davec.expenses.Constants
-import com.davec.expenses.R
 import com.davec.expenses.room.Expense
 import com.davec.expenses.room.ExpenseListAdapter
 import com.davec.expenses.room.ExpenseViewModel
@@ -191,17 +186,12 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Expense after :",total+" id "+expenseId)
 
                 val expense=Expense(expenseId, loc, 0, desc, total.toDouble(), date_in, false)
-
                 mExpenseViewModel?.update(expense)
 
             }
 
-
-
         } else {
             showToast("Not Saved")
-
-
         }
     }
 
